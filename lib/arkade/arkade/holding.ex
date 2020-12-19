@@ -28,7 +28,6 @@ defmodule Arkade.Holding do
       |> Enum.map(fn row -> Map.to_list(row) end )
       #|> Enum.map(fn row -> changeset(row, []) end)
     
-    IO.inspect(Enum.at(entries, 0), label: "entries")
     Arkade.Repo.insert_all(Arkade.Holding, entries)
   end 
 end
