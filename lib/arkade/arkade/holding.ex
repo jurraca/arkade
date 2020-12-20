@@ -19,15 +19,32 @@ defmodule Arkade.Holding do
   def changeset(holding, attrs) do
     holding
     |> cast(attrs, [:date, :fund, :company, :ticker, :cusip, :shares, :market_value, :weight])
-    |> validate_required([:date, :fund, :company, :ticker, :cusip, :shares, :market_value, :weight])
+    |> validate_required([
+      :date,
+      :fund,
+      :company,
+      :ticker,
+      :cusip,
+      :shares,
+      :market_value,
+      :weight
+    ])
   end
 
-  def load_from_raw(rows) do 
-    entries = rows 
+  def load_from_raw(rows) do
+    entries =
+      rows
       |> Enum.filter(fn item -> item !== nil end)
-      |> Enum.map(fn row -> Map.to_list(row) end )
-      #|> Enum.map(fn row -> changeset(row, []) end)
-    
+      |> Enum.map(fn row -> Map.to_list(row) end)
+
+    # |> Enum.map(fn row -> changeset(row, []) end)
+
     Arkade.Repo.insert_all(Arkade.Holding, entries)
-  end 
+  end
+
+  def fetch_and_load() do
+    Fetcher.fetch()
+    |> Enum.map(fn item -> Csv.parse(item) end)
+    |> Enum.map(fn row -> load_from_raw(row) end)
+  end
 end
