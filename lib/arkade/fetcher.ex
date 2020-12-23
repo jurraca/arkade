@@ -31,10 +31,11 @@ defmodule Arkade.Fetcher do
   def build_url([], output), do: output
 
   def request([head | tail], state) do
-    new_state = head
-    |> HTTPoison.get()
-    |> handle_response()
-    |> append_state(state)
+    new_state =
+      head
+      |> HTTPoison.get()
+      |> handle_response()
+      |> append_state(state)
 
     # sleep(1)
     request(tail, new_state)
