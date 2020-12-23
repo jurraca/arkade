@@ -39,7 +39,7 @@ defmodule Arkade.Csv do
     Enum.join([year, month, day], "-")
   end
 
-  defp format_date([""]), do: "2100-01-01"
+  defp format_date([""]), do: nil
 
   defp round_float(float) do
     case Integer.parse(float) do

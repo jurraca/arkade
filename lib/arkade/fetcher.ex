@@ -15,7 +15,7 @@ defmodule Arkade.Fetcher do
   def fetch do
     [@arkk, @arkq, @arkw, @arkg, @arkf, @prnt, @izrl]
     |> build_url([])
-    |> request()
+    |> request([])
   end
 
   @doc """
@@ -27,19 +27,17 @@ defmodule Arkade.Fetcher do
     build_url(tail, state)
   end
 
-  @doc """
-      if the given list is empty, return the state. 
-  """
+  # if the given list is empty, return the state. 
   def build_url([], output), do: output
 
   def request([head | tail], state) do
-    head
+    new_state = head
     |> HTTPoison.get()
     |> handle_response()
     |> append_state(state)
 
     # sleep(1)
-    request(tail, state)
+    request(tail, new_state)
   end
 
   def request([], state), do: state
