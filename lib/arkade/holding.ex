@@ -43,14 +43,4 @@ defmodule Arkade.Holding do
 
     Arkade.Repo.insert_all(Arkade.Holding, entries)
   end
-
-  @doc """
-    Run the fetcher, get a list of CSVs for each fund, and parse it. 
-    Pass this list of parsed CSVs to the loader. 
-  """
-  def fetch_and_load() do
-    Fetcher.fetch()
-    |> Enum.map(fn item -> Csv.parse(item) end)
-    |> Enum.map(fn fund -> load_from_raw(fund) end)
-  end
 end

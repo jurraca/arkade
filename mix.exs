@@ -5,7 +5,7 @@ defmodule Arkade.MixProject do
     [
       app: :arkade,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -46,7 +46,8 @@ defmodule Arkade.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:nimble_csv, "~> 1.0"},
-      {:httpoison, "~> 1.7.0"}
+      {:httpoison, "~> 1.7.0"},
+      {:quantum, "~> 3.0"}
     ]
   end
 

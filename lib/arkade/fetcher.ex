@@ -12,10 +12,23 @@ defmodule Arkade.Fetcher do
   @prnt "THE_3D_PRINTING_ETF_PRNT_HOLDINGS.csv"
   @izrl "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv"
 
+  @doc """
+    For each fund, construct the url, then the request and retrieve the csv. 
+  """
   def fetch do
     [@arkk, @arkq, @arkw, @arkg, @arkf, @prnt, @izrl]
     |> build_url([])
     |> request([])
+  end
+
+  @doc """
+    Run the fetcher, get a list of CSVs for each fund, and parse it. 
+    Pass this list of parsed CSVs to the loader. 
+  """
+  def fetch_and_load() do
+    fetch()
+    |> Enum.map(fn item -> Arkade.Csv.parse(item) end)
+    |> Enum.map(fn fund -> Arkade.Holding.load_from_raw(fund) end)
   end
 
   @doc """

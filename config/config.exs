@@ -10,6 +10,12 @@ use Mix.Config
 config :arkade,
   ecto_repos: [Arkade.Repo]
 
+config :arkade, Arkade.Cron,
+  timezone: :utc,
+  jobs: [
+    {"0 12 * * *", {Fetcher, :fetch_and_load, []}}
+  ]
+
 # Configures the endpoint
 config :arkade, ArkadeWeb.Endpoint,
   url: [host: "localhost"],

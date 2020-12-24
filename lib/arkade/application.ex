@@ -14,7 +14,8 @@ defmodule Arkade.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Arkade.PubSub},
       # Start the Endpoint (http/https)
-      ArkadeWeb.Endpoint
+      ArkadeWeb.Endpoint,
+      Arkade.Cron
       # Start a worker by calling: Arkade.Worker.start_link(arg)
       # {Arkade.Worker, arg}
     ]
