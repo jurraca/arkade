@@ -11,7 +11,16 @@ defmodule Arkade.Csv do
     |> Enum.map(fn row -> format_row(row) end)
   end
 
+  @doc """
+    Take in a parsed row, and attempt to extract data. 
+    There are empty rows with 8 cells after the data, which we throw out. 
+    There is a message and 7 cells after those empty rows, which we also throw out. 
+  """
   defp format_row([_head, "", "", "", "", "", ""]) do
+    nil
+  end
+
+  defp format_row(["", "", "", "", "", "", "", ""]) do
     nil
   end
 
@@ -39,7 +48,7 @@ defmodule Arkade.Csv do
     Enum.join([year, month, day], "-")
   end
 
-  defp format_date([""]), do: nil
+  defp format_date(_), do: "1970-01-01"
 
   defp round_float(float) do
     case Integer.parse(float) do
