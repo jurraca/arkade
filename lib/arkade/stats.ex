@@ -10,8 +10,9 @@ defmodule Arkade.Stats do
     |> Enum.map(fn [date, fund, value] -> %{date: date, fund: fund, market_value: value} end)
   end
 
-  def get_share_price(ticker, since \\ ~D[2020-12-21]) do
+  def get_share_price(ticker, since \\ ~D[2020-12-18]) do
     Holding
+    |> where([h], h.fund == "ARKK")
     |> where([h], h.ticker == ^ticker)
     |> where([h], h.date > ^since)
     |> select([h], [h.date, h.shares, h.market_value])
