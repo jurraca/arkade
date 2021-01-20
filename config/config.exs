@@ -17,9 +17,6 @@ config :arkade, Arkade.Cron,
     {"0 12 * * *", {Arkade.Fetcher, :fetch_and_load, []}}
   ]
 
-# Chartkick
-config :chartkick, json_serializer: Jason
-
 # Configures the endpoint
 config :arkade, ArkadeWeb.Endpoint,
   url: [host: "localhost"],
