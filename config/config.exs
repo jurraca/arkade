@@ -10,16 +10,20 @@ use Mix.Config
 config :arkade,
   ecto_repos: [Arkade.Repo]
 
+# Cron
 config :arkade, Arkade.Cron,
   timezone: :utc,
   jobs: [
-    {"0 12 * * *", {Fetcher, :fetch_and_load, []}}
+    {"0 12 * * *", {Arkade.Fetcher, :fetch_and_load, []}}
   ]
+
+# Chartkick
+config :chartkick, json_serializer: Jason
 
 # Configures the endpoint
 config :arkade, ArkadeWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "HoLBLoKcSGBihyy5FT9esz3mps/iae02G8K9xwyXbpzm+N+AE1ujf/z9hVKglaxt",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   render_errors: [view: ArkadeWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Arkade.PubSub,
   live_view: [signing_salt: "Ht8thCqr"]
